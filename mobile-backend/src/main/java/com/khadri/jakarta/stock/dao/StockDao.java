@@ -25,7 +25,7 @@ public class StockDao {
 	
 	private Connection getConnection() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/2024_batch_workshop_servlet_mobile_shop_app", "root", "root");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/2024_batch", "root", "root");
 	}
 
 	public StockForm selectStockTypeRecord(String type) {
