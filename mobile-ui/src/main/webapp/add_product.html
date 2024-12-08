@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='styles.css' />
+<script type="text/javascript">
+	function formValidation() {
+		var productNameComponent = document.getElementById("productName");
+
+		if (productNameComponent.value == "") {
+			;
+			alert("Please Enter ProductName ..!");
+			productNameComponent.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form action="add" method="post" onsubmit=" return formValidation()">
+		<table border="3">
+			<thead>
+				<h2>AddMobileProduct</h2>
+			</thead>
+			<tbody>
+
+				<tr>
+					<td>Product Name :</td>
+					<td><input type="text" name="productName" id="productName"></td>
+				</tr>
+
+				<tr>
+					<td><input type="submit" value="Add Product"></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

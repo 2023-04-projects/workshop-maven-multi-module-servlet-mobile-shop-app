@@ -1,0 +1,84 @@
+<html>
+
+<script type="text/javascript">
+
+function formValidation() {
+     
+	var selectBoxComponent =document.querySelector("#type");
+	var selectedIndex = selectBoxComponent.selectedIndex;
+	var productBrandComponent = document.getElementById("pbname");
+	var productPriceComponent = document.getElementById("ppname");
+	var productModelComponent = document.getElementById("pmname");
+	var arriveddateComponent = document.getElementById("adt");
+	
+	if (selectedIndex == 0) {
+		alert("Please select type.");
+		return false;
+		}
+	
+	if (productBrandComponent.value == "") {
+		alert("Please enter product brand.");
+		productBrandComponent.focus();
+		return false;
+		}
+	if (productModelComponent.value == "") {
+		alert("Please enter product model.");
+		productModelComponent.focus();
+		return false;
+		}
+	if (productBrandComponent.value == "") {
+		alert("Please enter product brand.");
+		productPriceComponent.focus();
+		return false;
+		}
+	if (arriveddateComponent.value == "") {
+		alert("Please enter arrived date time.");
+		arriveddateComponent.focus();
+		return false;
+		}
+}
+</script>
+<body>
+	<form action="stockaddpage" method="get" onsubmit="return formValidation()">
+	
+	
+		<table>
+			<thead>
+				<h2>Add Stock Details</h2>
+			</thead>
+			<tbody>
+				<tr>
+					<td><label>type:</label><select name="type" id="type">
+							<option>--select--</option>
+							<option>Mobile</option>
+							<option>Charger</option>
+							<option>PowerBank</option>
+							<option>HeadSet</option>
+							<option>BackCover</option>
+					</select></td>
+				</tr>
+
+				<tr>
+					<td>arrived_date_time:<input type="datetime-local"
+						name="arrived_date_time" id="adt"></td>
+				</tr>
+
+				<tr>
+					<td>Product_brand:<input type="text" name="Product_brand" id="pb"></td>
+				</tr>
+
+				<tr>
+					<td>product_price:<input type="text" name="product_price" id="pp"></td>
+				</tr>
+				<tr>
+					<td>product_model:<input type="text" name="product_model" id="pm"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="AddStock"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</form>
+</body>
+</html>
