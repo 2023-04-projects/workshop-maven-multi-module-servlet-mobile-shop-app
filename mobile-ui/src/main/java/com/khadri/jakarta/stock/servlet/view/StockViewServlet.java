@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 import com.khadri.jakarta.stock.dao.StockDao;
@@ -13,7 +14,6 @@ import com.khadri.jakarta.stock.form.HeadSetForm;
 import com.khadri.jakarta.stock.form.MobileForm;
 import com.khadri.jakarta.stock.form.PowerBankForm;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,10 +29,12 @@ public class StockViewServlet extends HttpServlet {
 	private List<HeadSetForm> listOfHeadSetForm;
 	private List<PowerBankForm> listOfPowerBankForm;
 	private List<BackCoverForm> listOfBackCoverForm;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		stockDao = new StockDao();
-		productDao = new ProductDao();
+		utilDao = new UtilDao();
+		stockDao = new StockDao(utilDao);
+		productDao = new ProductDao(utilDao);
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

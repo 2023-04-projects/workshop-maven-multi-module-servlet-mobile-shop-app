@@ -3,6 +3,7 @@ package com.khadri.jakarta.product.servlet.delete;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
@@ -15,9 +16,11 @@ public class ProductDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductDao dao;
 	private ProductForm form;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		dao = new ProductDao();
+		utilDao = new UtilDao();
+		dao = new ProductDao(utilDao);
 		form = new ProductForm();
 	}
 

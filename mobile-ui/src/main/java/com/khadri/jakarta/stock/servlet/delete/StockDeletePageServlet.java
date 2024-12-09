@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 import com.khadri.jakarta.stock.dao.StockDao;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,10 +19,12 @@ public class StockDeletePageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private StockDao stockDao;
 	private ProductDao productDao;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		stockDao = new StockDao();
-		productDao = new ProductDao();
+		utilDao = new UtilDao();
+		stockDao = new StockDao(utilDao);
+		productDao = new ProductDao(utilDao);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

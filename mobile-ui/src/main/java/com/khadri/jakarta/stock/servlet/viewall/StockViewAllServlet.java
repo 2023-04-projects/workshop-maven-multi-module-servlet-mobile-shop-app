@@ -5,11 +5,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.stock.dao.StockDao;
 import com.khadri.jakarta.stock.form.ProductForm;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,10 +19,12 @@ public class StockViewAllServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private StockDao stockDao;
 	private ProductDao productDao;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		stockDao = new StockDao();
-		productDao = new ProductDao();
+		utilDao = new UtilDao();
+		stockDao = new StockDao(utilDao);
+		productDao = new ProductDao(utilDao);
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +39,7 @@ public class StockViewAllServlet extends HttpServlet {
 		});
 
 		PrintWriter pw = resp.getWriter();
- 
+
 		pw.println("<html>");
 		pw.println("<head>");
 		pw.println("<link rel='stylesheet' type='text/css' href='styles.css'/>");

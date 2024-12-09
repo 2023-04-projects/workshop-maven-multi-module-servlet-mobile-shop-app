@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
@@ -13,14 +14,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ProductDeleteSearchPageServlet extends HttpServlet {
- 
+
 	private static final long serialVersionUID = 1L;
 	private ProductDao dao;
 	private List<ProductForm> listOfForms;
+	private UtilDao utilDao;
 
 	@Override
 	public void init() throws ServletException {
-		dao = new ProductDao();
+		utilDao = new UtilDao();
+		dao = new ProductDao(utilDao);
 	}
 
 	@Override
@@ -39,7 +42,7 @@ public class ProductDeleteSearchPageServlet extends HttpServlet {
 		sb.append("if (productIdComponent.value == '') {");
 		sb.append("alert('Please Enter Product Id.');");
 		sb.append("productIdComponent.focus();");
-		sb.append("return false;"); 
+		sb.append("return false;");
 		sb.append("} ");
 		sb.append("} ");
 		sb.append("</script>");
@@ -80,16 +83,16 @@ public class ProductDeleteSearchPageServlet extends HttpServlet {
 			sb.append("<th>ProductId</th>");
 			sb.append("<th>ProductName</th>");
 			sb.append("</tr>");
-			if(!listOfForms.isEmpty()) {
+			if (!listOfForms.isEmpty()) {
 				listOfForms.stream().forEach(eachProduct -> {
 					sb.append("<tr>");
-					sb.append("<td><a href='productdeletepage?ID=" + eachProduct.getId() + "&Name=" + eachProduct.getName()
-					+ "' target='bottom_right'> " + eachProduct.getId() + "</a></td>");
+					sb.append("<td><a href='productdeletepage?ID=" + eachProduct.getId() + "&Name="
+							+ eachProduct.getName() + "' target='bottom_right'> " + eachProduct.getId() + "</a></td>");
 					sb.append("<td>" + eachProduct.getName() + "</td>");
 					sb.append("</tr>");
 				});
-				
-			}else {
+
+			} else {
 				sb.append("<tr>");
 				sb.append("<td colspan='2' id='nrf'>No Records Found</td>");
 				sb.append("</tr>");

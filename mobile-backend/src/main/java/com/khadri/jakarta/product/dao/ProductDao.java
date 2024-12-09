@@ -1,33 +1,49 @@
 package com.khadri.jakarta.product.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
 public class ProductDao {
-	
-	private Connection getConnection() throws Exception {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/2024_batch_workshop_servlet_mobile_shop_app","root", "root");
+	private UtilDao utilDao;
+	PreparedStatement pstmt;
+	Statement stmt;
+	Connection con;
+
+	public ProductDao(UtilDao utilDao) {
+		this.utilDao = utilDao;
 	}
 
 	public int insertMobileData(ProductForm form) {
 		System.out.println("ProductDao insertProductData(-)");
 		int result = 0;
-		try (Connection con = getConnection();
-				PreparedStatement pstmt = con.prepareStatement("INSERT INTO product(Name) VALUES(?)")) {
+		try {
+
+			con = utilDao.getNewConnection();
+
+			pstmt = con.prepareStatement("INSERT INTO product(Name) VALUES(?)");
 
 			pstmt.setString(1, form.getName());
 			result = pstmt.executeUpdate();
 
 		} catch (Exception e) {
 			System.out.println("Exception occurred: " + e.getMessage());
+		} finally {
+			System.out.println();
+			try {
+				pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -36,9 +52,11 @@ public class ProductDao {
 		System.out.println("ProductDao viewProductData(-)");
 		List<ProductForm> listOfData = new ArrayList<>();
 
-		try (Connection con = getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet resultSet = stmt.executeQuery("SELECT * FROM product WHERE Id='" + productId + "'")) {
+		try {
+			con = utilDao.getNewConnection();
+
+			stmt = con.createStatement();
+			ResultSet resultSet = stmt.executeQuery("SELECT * FROM product WHERE Id='" + productId + "'");
 
 			if (resultSet.next()) {
 				ProductForm form = new ProductForm();
@@ -49,6 +67,15 @@ public class ProductDao {
 
 		} catch (Exception e) {
 			System.out.println("Exception occurred: " + e.getMessage());
+		} finally {
+			System.out.println();
+			try {
+				stmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return listOfData;
 	}
@@ -57,9 +84,11 @@ public class ProductDao {
 		System.out.println("ProductDao selectProductData(-)");
 		List<ProductForm> listOfData = new ArrayList<>();
 
-		try (Connection con = getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet resultSet = stmt.executeQuery("SELECT * FROM product")) {
+		try {
+			con = utilDao.getNewConnection();
+
+			stmt = con.createStatement();
+			ResultSet resultSet = stmt.executeQuery("SELECT * FROM product");
 
 			while (resultSet.next()) {
 				ProductForm form = new ProductForm();
@@ -70,6 +99,15 @@ public class ProductDao {
 
 		} catch (Exception e) {
 			System.out.println("Exception occurred: " + e.getMessage());
+		} finally {
+			System.out.println();
+			try {
+				stmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return listOfData;
 	}
@@ -78,9 +116,11 @@ public class ProductDao {
 		System.out.println("ProductDao selectProductNames(-)");
 		List<String> listOfProductNames = new ArrayList<>();
 
-		try (Connection con = getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet resultSet = stmt.executeQuery("SELECT Name FROM product")) {
+		try {
+			con = utilDao.getNewConnection();
+
+			stmt = con.createStatement();
+			ResultSet resultSet = stmt.executeQuery("SELECT Name FROM product");
 
 			while (resultSet.next()) {
 				listOfProductNames.add(resultSet.getString(1));
@@ -88,6 +128,15 @@ public class ProductDao {
 
 		} catch (Exception e) {
 			System.out.println("Exception occurred: " + e.getMessage());
+		} finally {
+			System.out.println();
+			try {
+				stmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return listOfProductNames;
 	}
@@ -96,7 +145,7 @@ public class ProductDao {
 		System.out.println("ProductDao updateProduct(-)");
 		int result = 0;
 
-		try (Connection con = getConnection();
+		try (Connection con = utilDao.getNewConnection();
 				PreparedStatement pstmt = con.prepareStatement("UPDATE product SET Name=? WHERE ID=?")) {
 
 			pstmt.setString(1, form.getName());
@@ -115,9 +164,9 @@ public class ProductDao {
 		System.out.println("ProductDao deleteProduct(-)");
 		int result = 0;
 		try {
-			Connection con = getConnection();
+			con = utilDao.getNewConnection();
 
-			PreparedStatement pstmt = con.prepareStatement("delete from product where ID=?");
+			pstmt = con.prepareStatement("delete from product where ID=?");
 			pstmt.setInt(1, form.getId());
 
 			result = pstmt.executeUpdate();
@@ -125,6 +174,15 @@ public class ProductDao {
 
 		} catch (Exception e) {
 			System.out.println("Exception occured" + e.getMessage());
+		} finally {
+			System.out.println();
+			try {
+				pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 

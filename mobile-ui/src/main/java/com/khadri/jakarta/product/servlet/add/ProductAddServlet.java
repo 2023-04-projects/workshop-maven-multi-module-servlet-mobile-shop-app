@@ -3,6 +3,7 @@ package com.khadri.jakarta.product.servlet.add;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
@@ -17,10 +18,12 @@ public class ProductAddServlet extends HttpServlet {
 
 	private ProductDao dao;
 	private ProductForm form;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
 		form = new ProductForm();
-		dao = new ProductDao();
+		utilDao = new UtilDao();
+		dao = new ProductDao(utilDao);
 	}
 
 	@Override

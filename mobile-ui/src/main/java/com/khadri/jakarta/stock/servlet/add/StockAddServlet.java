@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.stock.dao.StockDao;
 import com.khadri.jakarta.stock.form.BackCoverForm;
 import com.khadri.jakarta.stock.form.ChargerForm;
@@ -30,9 +31,11 @@ public class StockAddServlet extends HttpServlet {
 	private HeadSetForm headSetForm;
 	private BackCoverForm backCoverForm;
 	private StockDao stockDao;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		stockDao = new StockDao();
+		utilDao = new UtilDao();
+		stockDao = new StockDao(utilDao);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
