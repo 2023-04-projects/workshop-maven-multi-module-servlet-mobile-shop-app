@@ -3,6 +3,7 @@ package com.khadri.jakarta.stock.servlet.modify;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.stock.dao.StockDao;
 
 import jakarta.servlet.ServletException;
@@ -15,9 +16,11 @@ public class StockModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private StockDao stockDao;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		stockDao = new StockDao();
+		utilDao = new UtilDao();
+		stockDao = new StockDao(utilDao);
 	}
 
 	@Override
@@ -45,8 +48,7 @@ public class StockModifyServlet extends HttpServlet {
 			sb.append("<label>Product Model:</label>");
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("<input type='text' name='product_model' value=" + productModel
-					+ ">");
+			sb.append("<input type='text' name='product_model' value=" + productModel + ">");
 			sb.append("</td>");
 			sb.append("</tr>");
 			sb.append("<tr>");
@@ -54,8 +56,7 @@ public class StockModifyServlet extends HttpServlet {
 			sb.append("<label>Product price:</label>");
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("<input type='text' name='product_price' value=" + productPriceStr
-					+ ">");
+			sb.append("<input type='text' name='product_price' value=" + productPriceStr + ">");
 			sb.append("</td>");
 			sb.append("</tr>");
 			sb.append("<input type='hidden' name='type' value=" + productType + ">");

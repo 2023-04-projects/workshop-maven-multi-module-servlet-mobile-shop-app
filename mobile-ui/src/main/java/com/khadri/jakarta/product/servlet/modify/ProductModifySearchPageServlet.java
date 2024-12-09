@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +20,12 @@ public class ProductModifySearchPageServlet extends HttpServlet {
 	private ProductDao dao;
 
 	private List<ProductForm> listOfForms;
+	private UtilDao utilDao;
 
 	@Override
 	public void init() throws ServletException {
-		dao = new ProductDao();
+		utilDao = new UtilDao();
+		dao = new ProductDao(utilDao);
 	}
 
 	@Override
@@ -64,16 +66,16 @@ public class ProductModifySearchPageServlet extends HttpServlet {
 
 		if (productId != null) {
 			listOfForms = dao.viewProductData(productId);
-			
-			if(!listOfForms.isEmpty()) {
+
+			if (!listOfForms.isEmpty()) {
 				listOfForms.stream().forEach(eachProduct -> {
 					sb.append("<tr>");
-					sb.append("<td><a href='productmodifypage?ID=" + eachProduct.getId() + "&Name=" + eachProduct.getName()
-					+ "' target='bottom_right'> " + eachProduct.getId() + "</a></td>");
+					sb.append("<td><a href='productmodifypage?ID=" + eachProduct.getId() + "&Name="
+							+ eachProduct.getName() + "' target='bottom_right'> " + eachProduct.getId() + "</a></td>");
 					sb.append("<td>" + eachProduct.getName() + "</td>");
 					sb.append("</tr>");
 				});
-			}else {
+			} else {
 				sb.append("<tr>");
 				sb.append("<td colspan='2' id='nrf'>No Records Found</td>");
 				sb.append("</tr>");

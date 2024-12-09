@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.stock.dao.StockDao;
 import com.khadri.jakarta.stock.form.BackCoverForm;
 import com.khadri.jakarta.stock.form.ChargerForm;
@@ -27,10 +28,12 @@ public class StockModifySearchPageServlet extends HttpServlet {
 	private List<HeadSetForm> listOfHeadSetForm;
 	private List<PowerBankForm> listOfPowerBankForm;
 	private List<BackCoverForm> listOfBackCoverForm;
+	private UtilDao utilDao;
 
 	@Override
 	public void init() throws ServletException {
-		stockDao = new StockDao();
+		utilDao = new UtilDao();
+		stockDao = new StockDao(utilDao);
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class StockModifySearchPageServlet extends HttpServlet {
 						sb.append("</tr>");
 					}
 
-				}else {
+				} else {
 					sb.append("<tr>");
 					sb.append("<td colspan='4' id='nrf'>No Records Found</td>");
 					sb.append("</tr>");
@@ -90,15 +93,14 @@ public class StockModifySearchPageServlet extends HttpServlet {
 					for (ChargerForm charger : listOfChargerForm) {
 						sb.append("<tr>");
 						sb.append("<td>").append(charger.getProductBrand()).append("</td>");
-						sb.append("<td><a href='stockmodifyservlet?product_model=")
-								.append(charger.getProductModel())
+						sb.append("<td><a href='stockmodifyservlet?product_model=").append(charger.getProductModel())
 								.append("&product_price=" + charger.getProductPrice() + "&type=" + type + "'>")
 								.append(charger.getProductModel()).append("</a></td>");
 						sb.append("<td>").append(charger.getProductPrice()).append("</td>");
 						sb.append("<td>").append(charger.getArrivedDateTime()).append("</td>");
 						sb.append("</tr>");
 					}
-				}else {
+				} else {
 					sb.append("<tr>");
 					sb.append("<td colspan='4' id='nrf'>No Records Found</td>");
 					sb.append("</tr>");
@@ -112,15 +114,14 @@ public class StockModifySearchPageServlet extends HttpServlet {
 					for (PowerBankForm powerbank : listOfPowerBankForm) {
 						sb.append("<tr>");
 						sb.append("<td>").append(powerbank.getProductBrand()).append("</td>");
-						sb.append("<td><a href='stockmodifyservlet?product_model=")
-								.append(powerbank.getProductModel())
+						sb.append("<td><a href='stockmodifyservlet?product_model=").append(powerbank.getProductModel())
 								.append("&product_price=" + powerbank.getProductPrice() + "&type=" + type + "'>")
 								.append(powerbank.getProductModel()).append("</a></td>");
 						sb.append("<td>").append(powerbank.getProductPrice()).append("</td>");
 						sb.append("<td>").append(powerbank.getArrivedDateTime()).append("</td>");
 						sb.append("</tr>");
 					}
-				}else {
+				} else {
 					sb.append("<tr>");
 					sb.append("<td colspan='4' id='nrf'>No Records Found</td>");
 					sb.append("</tr>");
@@ -133,15 +134,14 @@ public class StockModifySearchPageServlet extends HttpServlet {
 					for (HeadSetForm headset : listOfHeadSetForm) {
 						sb.append("<tr>");
 						sb.append("<td>").append(headset.getProductBrand()).append("</td>");
-						sb.append("<td><a href='stockmodifyservlet?product_model=")
-								.append(headset.getProductModel())
+						sb.append("<td><a href='stockmodifyservlet?product_model=").append(headset.getProductModel())
 								.append("&product_price=" + headset.getProductPrice() + "&type=" + type + "'>")
 								.append(headset.getProductModel()).append("</a></td>");
 						sb.append("<td>").append(headset.getProductPrice()).append("</td>");
 						sb.append("<td>").append(headset.getArrivedDateTime()).append("</td>");
 						sb.append("</tr>");
 					}
-				}else {
+				} else {
 					sb.append("<tr>");
 					sb.append("<td colspan='4' id='nrf'>No Records Found</td>");
 					sb.append("</tr>");
@@ -154,15 +154,14 @@ public class StockModifySearchPageServlet extends HttpServlet {
 					for (BackCoverForm backcover : listOfBackCoverForm) {
 						sb.append("<tr>");
 						sb.append("<td>").append(backcover.getProductBrand()).append("</td>");
-						sb.append("<td><a href='stockmodifyservlet?product_model=")
-								.append(backcover.getProductModel())
+						sb.append("<td><a href='stockmodifyservlet?product_model=").append(backcover.getProductModel())
 								.append("&product_price=" + backcover.getProductPrice() + "&type=" + type + "'>")
 								.append(backcover.getProductModel()).append("</a></td>");
 						sb.append("<td>").append(backcover.getProductPrice()).append("</td>");
 						sb.append("<td>").append(backcover.getArrivedDateTime()).append("</td>");
 						sb.append("</tr>");
 					}
-				}else {
+				} else {
 					sb.append("<tr>");
 					sb.append("<td colspan='4' id='nrf'>No Records Found</td>");
 					sb.append("</tr>");

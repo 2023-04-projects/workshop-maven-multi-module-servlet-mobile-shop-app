@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
@@ -17,10 +18,13 @@ public class ProductViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductDao dao;
 	private List<ProductForm> listOfForms;
+	private UtilDao utilDao;
 
 	@Override
 	public void init() throws ServletException {
-		dao = new ProductDao();
+		utilDao = new UtilDao();
+		dao = new ProductDao(utilDao);
+
 	}
 
 	@Override
@@ -41,7 +45,7 @@ public class ProductViewServlet extends HttpServlet {
 		sb.append("if (productIdComponent.value == '') {");
 		sb.append("alert('Please Enter Product Id.');");
 		sb.append("productIdComponent.focus();");
-		sb.append("return false;"); 
+		sb.append("return false;");
 		sb.append("} ");
 		sb.append("} ");
 		sb.append("</script>");

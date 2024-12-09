@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
@@ -17,9 +18,12 @@ public class ProductViewAllServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductDao dao;
 	private List<ProductForm> listOfForms;
+	private UtilDao utilDao;
 
 	public void init() throws ServletException {
-		dao = new ProductDao();	}
+		utilDao = new UtilDao();
+		dao = new ProductDao(utilDao);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +36,7 @@ public class ProductViewAllServlet extends HttpServlet {
 		sb.append("<link rel='stylesheet' type='text/css' href='styles.css'/>");
 		sb.append("</head>");
 		sb.append("<body>");
-		
+
 		String productId = req.getParameter("getId()");
 		PrintWriter pw = resp.getWriter();
 		if (productId == null || productId.isEmpty()) {
@@ -54,7 +58,7 @@ public class ProductViewAllServlet extends HttpServlet {
 			});
 			sb.append("</tbody>");
 			pw.println(sb);
-			
+
 			sb.append("</body>");
 			sb.append("</html>");
 

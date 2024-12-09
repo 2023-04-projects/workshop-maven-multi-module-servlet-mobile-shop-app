@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.khadri.jakarta.dao.util.UtilDao;
 import com.khadri.jakarta.product.dao.ProductDao;
 import com.khadri.jakarta.product.form.ProductForm;
 
@@ -17,10 +18,12 @@ public class StockModifyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private ProductDao productDao;
+	private UtilDao utilDao;
 
 	@Override
 	public void init() throws ServletException {
-		productDao = new ProductDao();
+		utilDao = new UtilDao();
+		productDao = new ProductDao(utilDao);
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
